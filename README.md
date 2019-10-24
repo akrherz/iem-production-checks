@@ -1,2 +1,3 @@
-# iem-production-checks
-Integration checks that the IEM website is not having kittens.
+# Check IEM Website for Health
+
+Travis-CI doesn't have enough to do, so lets have it check the [IEM Website](https://mesonet.agron.iastate.edu) to see how it is doing.

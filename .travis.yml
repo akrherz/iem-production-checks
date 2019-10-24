@@ -12,5 +12,4 @@ install:
   - python --version
 
 script:
-  - pytest
-
+  - pytest -n 8 -x
