@@ -8,6 +8,7 @@ env:
     - DEBIAN_FRONTEND=noninteractive
 
 install:
+  - pip install --upgrade -r requirements.txt
   - python --version
 
 script:
