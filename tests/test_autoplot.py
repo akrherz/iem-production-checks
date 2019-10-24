@@ -56,8 +56,8 @@ def test_autoplot(opts):
         uri = "%s/plotting/auto/plot/%s/dpi:100::_cb:1.%s" % (SERVICE, i, fmt)
         res = requests.get(uri, timeout=600)
         print(
-            "i: %s fmt: %s status_code: %s len(response): %s" % (
-                i, fmt, res.status_code, len(res.content)))
+            "i: %s fmt: %s status_code: %s len(response): %s uri: %s" % (
+                i, fmt, res.status_code, len(res.content), uri))
         # Known failures likely due to missing data
         assert res.status_code in [200, 400]
         assert res.content != ""
