@@ -1,0 +1,15 @@
+sudo: required
+language: python
+dist: bionic
+
+env:
+  global:
+    # Prevent extraneous log messages
+    - DEBIAN_FRONTEND=noninteractive
+
+install:
+  - python --version
+
+script:
+  - pytest
+
