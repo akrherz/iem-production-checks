@@ -23,7 +23,7 @@ def get_formats(i):
         json = res.json()
     except Exception as exp:
         print("%s %s -> json failed\n%s" % (i, res.content, exp))
-        return
+        return []
     fmts = ['png', ]
     if 'report' in json and json['report']:
         fmts.append('txt')
@@ -58,6 +58,14 @@ def test_autoplot(opts):
         print(
             "i: %s fmt: %s status_code: %s len(response): %s uri: %s" % (
                 i, fmt, res.status_code, len(res.content), uri))
+        # Flakey website emits a flakey 500 sometimes due to known unknowns
+        # just retry it once and see what happens.
+        if res.status_code == 500:
+            res = requests.get(uri, timeout=600)
+            print(
+                "i: %s fmt: %s status_code: %s len(response): %s uri: %s" % (
+                    i, fmt, res.status_code, len(res.content), uri))
+
         # Known failures likely due to missing data
         assert res.status_code in [200, 400]
         assert res.content != ""
