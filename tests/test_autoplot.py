@@ -1,9 +1,10 @@
 """Attempt to call each autoplot and whine about API calls that error"""
+import os
 
 import pytest
 import requests
 
-SERVICE = "https://mesonet.agron.iastate.edu"
+SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
 
 def get_formats(i):
