@@ -10,10 +10,13 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 def get_formats(i):
     """Figure out which formats this script supports"""
     uri = "%s/plotting/auto/meta/%s.json" % (SERVICE, i)
+    res = None
     try:
-        res = requests.get(uri, timeout=10)
+        res = requests.get(uri, timeout=20)
     except requests.exceptions.ReadTimeout:
         print("%s. %s -> Read Timeout" % (i, uri[16:]))
+    if res is None:
+        raise ValueError("Failed to fetch metadata, BUG.")
     if res.status_code == 404:
         print("scanning metadata got 404 at i=%s, proceeding" % (i, ))
         return False
