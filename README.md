@@ -1,3 +1,5 @@
 # Check IEM Website for Health
 
-Travis-CI doesn't have enough to do, so lets have it check the [IEM Website](https://mesonet.agron.iastate.edu) to see how it is doing.
+A simple repo that runs daily checks against various IEM website resources.
+
+Github Actions: [![Build Status](https://github.com/akrherz/iem-production-checks/workflows/Check%20IEM/badge.svg)](https://github.com/akrherz/iem)
