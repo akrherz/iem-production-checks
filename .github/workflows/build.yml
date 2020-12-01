@@ -1,5 +1,8 @@
 name: Check IEM
-on: [push]
+on:
+  schedule:
+    # This is in UTC
+    - cron: '27 12 * * *'
 jobs:
   build-linux:
     name: Python (${{ matrix.python-version }})
