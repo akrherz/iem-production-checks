@@ -1,5 +1,6 @@
 name: Check IEM
 on:
+  push:
   schedule:
     # This is in UTC
     - cron: '27 12 * * *'
