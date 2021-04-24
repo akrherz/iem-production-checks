@@ -56,6 +56,8 @@ def get_all():
 def test_autoplot(opts):
     """Run this plot"""
     i = opts
+    res = requests.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=20)
+    assert res.status_code == 200
     for fmt in get_formats(i):
         uri = "%s/plotting/auto/plot/%s/dpi:100::_cb:1.%s" % (SERVICE, i, fmt)
         res = requests.get(uri, timeout=600)
