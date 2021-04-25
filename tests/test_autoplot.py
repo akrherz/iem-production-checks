@@ -56,7 +56,9 @@ def get_all():
 def test_autoplot(opts):
     """Run this plot"""
     i = opts
-    res = requests.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=20)
+    # The 600 timeout may seem lax, but in Github Actions, I have found some
+    # stales whereby a lower timeout leads to false positives
+    res = requests.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=600)
     assert res.status_code == 200
     for fmt in get_formats(i):
         uri = "%s/plotting/auto/plot/%s/dpi:100::_cb:1.%s" % (SERVICE, i, fmt)
