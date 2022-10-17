@@ -9,24 +9,24 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
 def get_formats(i):
     """Figure out which formats this script supports"""
-    uri = "%s/plotting/auto/meta/%s.json" % (SERVICE, i)
+    uri = f"{SERVICE}/plotting/auto/meta/{i}.json"
     res = None
     try:
         res = requests.get(uri, timeout=20)
     except requests.exceptions.ReadTimeout:
-        print("%s. %s -> Read Timeout" % (i, uri[16:]))
+        print(f"{i}. {uri[16:]} -> Read Timeout")
     if res is None:
         raise ValueError("Failed to fetch metadata, BUG.")
     if res.status_code == 404:
-        print("scanning metadata got 404 at i=%s, proceeding" % (i, ))
+        print(f"scanning metadata got 404 at i={i}, proceeding")
         return False
     if res.status_code != 200:
-        print("%s. %s -> HTTP: %s" % (i, uri, res.status_code))
+        print(f"{i}. {uri} -> HTTP: {res.status_code}")
         print(res.text)
     try:
         json = res.json()
     except Exception as exp:
-        print("%s %s -> json failed\n%s" % (i, res.content, exp))
+        print(f"{i} {res.content} -> json failed\n{exp}")
         return []
     fmts = ['png', ]
     if 'report' in json and json['report']:
@@ -43,8 +43,8 @@ def get_formats(i):
 
 def get_all():
     """Figure out what we need to run for."""
-    url = "%s/plotting/auto/meta/0.json" % (SERVICE, )
-    j = requests.get(url).json()
+    url = f"{SERVICE}/plotting/auto/meta/0.json"
+    j = requests.get(url, timeout=60).json()
     queue = []
     for lbl in j['plots']:
         for opt in lbl['options']:
@@ -61,18 +61,20 @@ def test_autoplot(opts):
     res = requests.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=600)
     assert res.status_code == 200
     for fmt in get_formats(i):
-        uri = "%s/plotting/auto/plot/%s/dpi:100::_cb:1.%s" % (SERVICE, i, fmt)
+        uri = f"{SERVICE}/plotting/auto/plot/{i}/dpi:100::_cb:1.{fmt}"
         res = requests.get(uri, timeout=600)
         print(
-            "i: %s fmt: %s status_code: %s len(response): %s uri: %s" % (
-                i, fmt, res.status_code, len(res.content), uri))
+            f"i: {i} fmt: {fmt} status_code: {res.status_code} "
+            f"len(response): {len(res.content)} uri: {uri}"
+        )
         # Flakey website emits a flakey 500 sometimes due to known unknowns
         # just retry it once and see what happens.
         if res.status_code == 500:
             res = requests.get(uri, timeout=600)
             print(
-                "i: %s fmt: %s status_code: %s len(response): %s uri: %s" % (
-                    i, fmt, res.status_code, len(res.content), uri))
+                f"i: {i} fmt: {fmt} status_code: {res.status_code} "
+                f"len(response): {len(res.content)} uri: {uri}"
+            )
 
         # Known failures likely due to missing data
         assert res.status_code in [200, 400]
