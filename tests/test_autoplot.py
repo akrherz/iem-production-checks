@@ -28,16 +28,18 @@ def get_formats(i):
     except Exception as exp:
         print(f"{i} {res.content} -> json failed\n{exp}")
         return []
-    fmts = ['png', ]
-    if 'report' in json and json['report']:
-        fmts.append('txt')
-    if 'highcharts' in json and json['highcharts']:
-        fmts.append('js')
-    if 'mapbox' in json and json['mapbox']:
-        fmts.append('mapbox')
-    if json.get('data', False):
-        fmts.append('csv')
-        fmts.append('xlsx')
+    fmts = [
+        "png",
+    ]
+    if "report" in json and json["report"]:
+        fmts.append("txt")
+    if "highcharts" in json and json["highcharts"]:
+        fmts.append("js")
+    if "mapbox" in json and json["mapbox"]:
+        fmts.append("mapbox")
+    if json.get("data", False):
+        fmts.append("csv")
+        fmts.append("xlsx")
     return fmts
 
 
@@ -46,9 +48,9 @@ def get_all():
     url = f"{SERVICE}/plotting/auto/meta/0.json"
     j = requests.get(url, timeout=60).json()
     queue = []
-    for lbl in j['plots']:
-        for opt in lbl['options']:
-            queue.append(opt['id'])
+    for lbl in j["plots"]:
+        for opt in lbl["options"]:
+            queue.append(opt["id"])
     return queue
 
 
