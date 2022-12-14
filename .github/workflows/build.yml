@@ -2,8 +2,9 @@ name: Check IEM
 on:
   push:
   schedule:
-    # This is in UTC
-    - cron: '27 12 * * *'
+    # UTC and picking a quiet processing time of day as some
+    # autoplots like to timeout during the morning hours
+    - cron: '37 4 * * *'
 jobs:
   build-linux:
     name: Python (${{ matrix.python-version }})
