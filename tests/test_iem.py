@@ -1,8 +1,8 @@
 """Run Tests."""
 import os
 
-import requests
 import pytest
+import requests
 from bs4 import BeautifulSoup
 
 SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
