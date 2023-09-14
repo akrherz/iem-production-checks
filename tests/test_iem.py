@@ -16,7 +16,8 @@ def get_jsonlinks():
     for tag in soup.find_all("a"):
         if tag.text != "Example JSON":
             continue
-        queue.append(tag.attrs["href"])
+        if tag.attrs["href"].startswith("http"):
+            queue.append(tag.attrs["href"])
     return queue
 
 
