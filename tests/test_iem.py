@@ -44,5 +44,8 @@ def get_uris():
 @pytest.mark.parametrize("uri", get_uris())
 def test_uri(uri):
     """Test a URI."""
+    # We can't test API server on localhost, so skip those
+    if uri.startswith("/api/") and SERVICE.find("iem.local") > 0:
+        return
     res = requests.get(f"{SERVICE}{uri}", timeout=60)
     assert res.status_code == 200
