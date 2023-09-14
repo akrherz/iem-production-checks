@@ -23,6 +23,8 @@ def get_jsonlinks():
 @pytest.mark.parametrize("opts", get_jsonlinks())
 def test_json_documentation_page_links(opts):
     """Test example URLs shown on the /json/ page."""
+    if opts.startswith("/"):
+        opts = f"{SERVICE}{opts}"
     res = requests.get(opts, timeout=60)
     assert res.status_code == 200
     assert res.json()
