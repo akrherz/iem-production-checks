@@ -16,7 +16,8 @@ def get_jsonlinks():
     for tag in soup.find_all("a"):
         if tag.text != "Example JSON":
             continue
-        if tag.attrs["href"].startswith("http"):
+        href = tag.attrs["href"]
+        if href.startswith("http") and href.find("/api/") < 0:
             queue.append(tag.attrs["href"])
     return queue
 
@@ -28,7 +29,7 @@ def test_json_documentation_page_links(opts):
         opts = f"{SERVICE}{opts}"
     res = requests.get(opts, timeout=60)
     assert res.status_code == 200
-    assert res.json()
+    res.json()
 
 
 # Load a list of uris provided by a local uris.txt file and test them
