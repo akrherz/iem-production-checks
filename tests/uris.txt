@@ -1,2 +1,6 @@
 /projects/iembot/
 /api/1/vtec/sbw_interval.geojson?begints=2023-08-30T00%3A00%3A00Z&endts=2023-08-31T00%3A00%3A00Z&only_new=true&ph=TO
+/cgi-bin/request/asos.py?station=WSSS&data=all&year1=2023&month1=9&day1=13&year2=2023&month2=9&day2=15&tz=Etc%2FUTC&format=onlycomma&latlon=no&direct=no&report_type=1&report_type=2
+/cgi-bin/request/isusm.py?mode=hourly&sts=NWLI4&year1=2023&month1=9&day1=15&year2=2023&month2=9&day2=16&format=tab
+/cgi-bin/request/asos.py?data=tmpf&tz=etc/utc&format=onlycomma&latlon=no&station=EBBR&year1=2023&month1=09&day1=14&year2=2023&month2=09&day2=18
+/request/grx/l3attr.php?version=1.5&dpi=96&lat=39.787&lon=-104.546
