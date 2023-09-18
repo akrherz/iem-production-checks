@@ -7,3 +7,4 @@
 /cgi-bin/mywindrose.py?nsector=36&station=SAN&network=CA_ASOS&year1=1970&day1=1&day2=1&month2=1&minute1=0&minute2=0&units=mph&justdata=true&hour1=0&hour2=0&year2=2024&month1=9&monthlimit=1
 /cgi-bin/request/asos.py?data=all&year1=2022&month1=1&day1=1&year2=2023&month2=12&day2=31&tz=Etc%2FUTC&format=onlytdf&latlon=yes&elev=yes&missing=null&trace=null&direct=no&report_type=1&report_type=2&network=BE__ASOS
 /json/sps_by_point.py?lat=30.5664&lon=-100.6427&sdate=1986%2F01%2F01&edate=2023%2F09%2F19
+/plotting/auto/plot/90/t:state::v:lastyear::ilabel:yes::geo:polygon::drawc:yes::year:2023::year2:2023::sdate:2006-01-01%200000::edate:2023-09-21%200000::network:WFO::station:MEG::state:IA::phenomena:TO::significance:A::cmap:jet::_r:t::dpi:100.png
