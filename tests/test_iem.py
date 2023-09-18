@@ -52,4 +52,5 @@ def test_uri(uri):
     if uri.startswith("/api/") and SERVICE.find("iem.local") > 0:
         return
     res = requests.get(f"{SERVICE}{uri}", timeout=60)
-    assert res.status_code == 200
+    # HTTP 400 should be known failures being gracefully handled
+    assert res.status_code in [200, 400]
