@@ -9,3 +9,4 @@
 /json/sps_by_point.py?lat=30.5664&lon=-100.6427&sdate=1986%2F01%2F01&edate=2023%2F09%2F19
 /plotting/auto/plot/90/t:state::v:lastyear::ilabel:yes::geo:polygon::drawc:yes::year:2023::year2:2023::sdate:2006-01-01%200000::edate:2023-09-21%200000::network:WFO::station:MEG::state:IA::phenomena:TO::significance:A::cmap:jet::_r:t::dpi:100.png
 /cgi-bin/request/gis/lsr.py?wfo%5b%5d=TAE&sts=2006-08-25T06:00Z&ets=2023-09-04T06:00Z&fmt=csv
+/cgi-bin/request/taf.py?station=STJ&tz=UTC&year1=2021&month1=6&day1=17&year2=2021&month2=6&day2=22&fmt=comma
