@@ -1,0 +1,5 @@
+dependencies:
+  - beautifulsoup4
+  - lxml
+  - pytest-xdist
+  - requests

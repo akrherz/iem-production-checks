@@ -1,4 +1,0 @@
-requests
-pytest-xdist
-beautifulsoup4
-lxml
