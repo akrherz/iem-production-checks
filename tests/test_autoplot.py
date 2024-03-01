@@ -1,4 +1,5 @@
 """Attempt to call each autoplot and whine about API calls that error"""
+
 import os
 
 import pytest
