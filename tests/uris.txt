@@ -1,3 +1,5 @@
+/json/vtec_event.py?wfo=KOUN&phenomena=TO&significance=W&etn=29&year=1996
+/json/raob.py?ts=202404261200
 /projects/iembot/
 /api/1/vtec/sbw_interval.geojson?begints=2023-08-30T00%3A00%3A00Z&endts=2023-08-31T00%3A00%3A00Z&only_new=true&ph=TO
 /cgi-bin/request/asos.py?station=WSSS&data=all&year1=2023&month1=9&day1=13&year2=2023&month2=9&day2=15&tz=Etc%2FUTC&format=onlycomma&latlon=no&direct=no&report_type=1&report_type=2
