@@ -11,26 +11,23 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
 def get_jsonlinks():
     """Figure out what we need to run for."""
-    content = requests.get(f"{SERVICE}/json/", timeout=60).content
+    content = requests.get(f"{SERVICE}/api/", timeout=60).content
     soup = BeautifulSoup(content, "lxml")
     queue = []
     for tag in soup.find_all("a"):
-        if tag.text != "Example JSON":
-            continue
-        href = tag.attrs["href"]
-        if href.startswith("http") and href.find("/api/") < 0:
+        href = tag.attrs.get("href", "")
+        if href.find("?help") > -1:
             queue.append(tag.attrs["href"])
     return queue
 
 
 @pytest.mark.parametrize("opts", get_jsonlinks())
 def test_json_documentation_page_links(opts):
-    """Test example URLs shown on the /json/ page."""
+    """Test example URLs shown on the /api/ page."""
     if opts.startswith("/"):
         opts = f"{SERVICE}{opts}"
     res = requests.get(opts, timeout=60)
     assert res.status_code == 200
-    res.json()
 
 
 # Load a list of uris provided by a local uris.txt file and test them
