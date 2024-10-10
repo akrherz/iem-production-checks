@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        PYTHON_VERSION: ["3.12"]
+        PYTHON_VERSION: ["3.13"]
     env:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     
