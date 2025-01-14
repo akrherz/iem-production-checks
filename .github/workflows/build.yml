@@ -36,6 +36,11 @@ jobs:
         environment-name: prod
         cache-environment: true
 
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
+      with:
+        limit-access-to-actor: true
+
     - name: Test with pytest
       run: |
         pytest -n 8 -x
