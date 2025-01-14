@@ -22,6 +22,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # Force Ipv4 usage
+    - name: Force Ipv4 to mesonet.agron
+      run: |
+        echo "129.186.90.1 mesonet.agron.iastate.edu" | sudo tee -a /etc/hosts
+
     # setup conda-forge with micromamba
     - name: Setup Python
       uses: mamba-org/setup-micromamba@v1
@@ -36,10 +41,10 @@ jobs:
         environment-name: prod
         cache-environment: true
 
-    - name: Setup upterm session
-      uses: lhotari/action-upterm@v1
-      with:
-        limit-access-to-actor: true
+    #- name: Setup upterm session
+    #  uses: lhotari/action-upterm@v1
+    #  with:
+    #    limit-access-to-actor: true
 
     - name: Test with pytest
       run: |
