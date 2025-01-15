@@ -2,8 +2,8 @@
 
 import os
 
+import httpx
 import pytest
-import requests
 
 SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
@@ -13,8 +13,8 @@ def get_formats(i):
     uri = f"{SERVICE}/plotting/auto/meta/{i}.json"
     res = None
     try:
-        res = requests.get(uri, timeout=20)
-    except requests.exceptions.ReadTimeout:
+        res = httpx.get(uri, timeout=20)
+    except httpx.ReadTimeout:
         print(f"{i}. {uri[16:]} -> Read Timeout")
     if res is None:
         raise ValueError("Failed to fetch metadata, BUG.")
@@ -47,7 +47,7 @@ def get_formats(i):
 def get_all():
     """Figure out what we need to run for."""
     url = f"{SERVICE}/plotting/auto/meta/0.json"
-    j = requests.get(url, timeout=60).json()
+    j = httpx.get(url, timeout=60).json()
     queue = []
     for lbl in j["plots"]:
         for opt in lbl["options"]:
@@ -61,11 +61,11 @@ def test_autoplot(opts):
     i = opts
     # The 600 timeout may seem lax, but in Github Actions, I have found some
     # stales whereby a lower timeout leads to false positives
-    res = requests.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=600)
+    res = httpx.get(f"{SERVICE}/plotting/auto/?q={i}", timeout=600)
     assert res.status_code == 200
     for fmt in get_formats(i):
         uri = f"{SERVICE}/plotting/auto/plot/{i}/dpi:100::_cb:1.{fmt}"
-        res = requests.get(uri, timeout=600)
+        res = httpx.get(uri, timeout=600)
         print(
             f"i: {i} fmt: {fmt} status_code: {res.status_code} "
             f"len(response): {len(res.content)} uri: {uri}"
@@ -73,7 +73,7 @@ def test_autoplot(opts):
         # Flakey website emits a flakey 500 sometimes due to known unknowns
         # just retry it once and see what happens.
         if res.status_code == 500:
-            res = requests.get(uri, timeout=600)
+            res = httpx.get(uri, timeout=600)
             print(
                 f"i: {i} fmt: {fmt} status_code: {res.status_code} "
                 f"len(response): {len(res.content)} uri: {uri}"

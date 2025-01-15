@@ -2,8 +2,8 @@
 
 import os
 
+import httpx
 import pytest
-import requests
 from bs4 import BeautifulSoup
 
 SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
@@ -11,7 +11,7 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
 def get_jsonlinks():
     """Figure out what we need to run for."""
-    content = requests.get(f"{SERVICE}/api/", timeout=60).content
+    content = httpx.get(f"{SERVICE}/api/", timeout=60).content
     soup = BeautifulSoup(content, "lxml")
     queue = []
     for tag in soup.find_all("a"):
@@ -26,7 +26,7 @@ def test_json_documentation_page_links(opts):
     """Test example URLs shown on the /api/ page."""
     if opts.startswith("/"):
         opts = f"{SERVICE}{opts}"
-    res = requests.get(opts, timeout=60)
+    res = httpx.get(opts, timeout=60)
     assert res.status_code == 200
 
 
@@ -49,6 +49,6 @@ def test_uri(uri):
     # We can't test API server on localhost, so skip those
     if uri.startswith("/api/") and SERVICE.find("iem.local") > 0:
         return
-    res = requests.get(f"{SERVICE}{uri}", timeout=60)
+    res = httpx.get(f"{SERVICE}{uri}", timeout=60)
     # HTTP 400 should be known failures being gracefully handled
     assert res.status_code in [200, 400]
