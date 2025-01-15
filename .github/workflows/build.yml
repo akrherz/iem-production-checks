@@ -48,4 +48,4 @@ jobs:
 
     - name: Test with pytest
       run: |
-        SERVICE=http://mesonet.agron.iastate.edu pytest -v -x
+        pytest -n 8 -x
