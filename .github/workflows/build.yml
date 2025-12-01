@@ -20,7 +20,7 @@ jobs:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     # Force Ipv4 usage
     #- name: Force Ipv4 to mesonet.agron
