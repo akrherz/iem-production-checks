@@ -15,17 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        PYTHON_VERSION: ["3.13"]
+        PYTHON_VERSION: ["3.14"]
     env:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     
     steps:
     - uses: actions/checkout@v6
-
-    # Force Ipv4 usage
-    #- name: Force Ipv4 to mesonet.agron
-    #  run: |
-    #    echo "129.186.90.1 mesonet.agron.iastate.edu" | sudo tee -a /etc/hosts
 
     # setup conda-forge with micromamba
     - name: Setup Python
