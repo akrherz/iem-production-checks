@@ -1,6 +1,7 @@
 """Run Tests."""
 
 import os
+import time
 
 import httpx
 import pytest
@@ -49,6 +50,11 @@ def test_uri(uri):
     # We can't test API server on localhost, so skip those
     if uri.startswith("/api/") and SERVICE.find("iem.local") > 0:
         return
-    res = httpx.get(f"{SERVICE}{uri}", timeout=60)
+    # HTTP 503 could be transient, so lets do some retrying
+    for _ in range(3):
+        res = httpx.get(f"{SERVICE}{uri}", timeout=60)
+        if res.status_code != 503:
+            break
+        time.sleep(5)
     # HTTP 400 should be known failures being gracefully handled
     assert res.status_code in [200, 400]
