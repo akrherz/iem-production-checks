@@ -45,19 +45,21 @@ def get_uris():
 
 
 @pytest.mark.parametrize("uri", get_uris())
-def test_uri(uri):
+def test_uri(uri: str):
     """Test a URI."""
     # We can't test API server on localhost, so skip those
     if uri.startswith("/api/") and SERVICE.find("iem.local") > 0:
         return
     # HTTP 503 could be transient, so lets do some retrying
+    res = None
     for _ in range(3):
         try:
-            res = httpx.get(f"{SERVICE}{uri}", timeout=60)
+            res = httpx.get(f"{SERVICE}{uri}", timeout=120)
             if res.status_code != 503:
                 break
         except httpx.ReadTimeout:
             continue
         time.sleep(5)
     # HTTP 400 should be known failures being gracefully handled
+    assert res is not None
     assert res.status_code in [200, 400]
