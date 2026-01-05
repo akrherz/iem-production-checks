@@ -52,9 +52,12 @@ def test_uri(uri):
         return
     # HTTP 503 could be transient, so lets do some retrying
     for _ in range(3):
-        res = httpx.get(f"{SERVICE}{uri}", timeout=60)
-        if res.status_code != 503:
-            break
+        try:
+            res = httpx.get(f"{SERVICE}{uri}", timeout=60)
+            if res.status_code != 503:
+                break
+        except httpx.ReadTimeout:
+            continue
         time.sleep(5)
     # HTTP 400 should be known failures being gracefully handled
     assert res.status_code in [200, 400]
