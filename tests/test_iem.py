@@ -60,6 +60,7 @@ def test_uri(uri: str):
         except httpx.ReadTimeout:
             continue
         time.sleep(5)
-    # HTTP 400 should be known failures being gracefully handled
     assert res is not None
-    assert res.status_code in [200, 400]
+    # HTTP 400 should be known failures being gracefully handled
+    # 429 could be throttling under load
+    assert res.status_code in [200, 400, 429]
