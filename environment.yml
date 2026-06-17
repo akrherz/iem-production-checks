@@ -1,5 +1,4 @@
 dependencies:
   - beautifulsoup4
   - httpx
-  - lxml
   - pytest-xdist

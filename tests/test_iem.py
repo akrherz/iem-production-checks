@@ -13,7 +13,7 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 def get_jsonlinks():
     """Figure out what we need to run for."""
     content = httpx.get(f"{SERVICE}/api/", timeout=60).content
-    soup = BeautifulSoup(content, "lxml")
+    soup = BeautifulSoup(content, "xml")
     queue = []
     for tag in soup.find_all("a"):
         href = tag.attrs.get("href", "")
