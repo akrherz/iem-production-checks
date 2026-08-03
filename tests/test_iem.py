@@ -3,8 +3,8 @@
 import os
 import time
 
-import httpx
 import pytest
+import requests
 from bs4 import BeautifulSoup
 
 SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
@@ -12,7 +12,7 @@ SERVICE = os.environ.get("SERVICE", "https://mesonet.agron.iastate.edu")
 
 def get_jsonlinks():
     """Figure out what we need to run for."""
-    content = httpx.get(f"{SERVICE}/api/", timeout=60).content
+    content = requests.get(f"{SERVICE}/api/", timeout=60).content
     soup = BeautifulSoup(content, "html.parser")
     queue = []
     for tag in soup.find_all("a"):
@@ -27,7 +27,7 @@ def test_json_documentation_page_links(opts):
     """Test example URLs shown on the /api/ page."""
     if opts.startswith("/"):
         opts = f"{SERVICE}{opts}"
-    res = httpx.get(opts, timeout=60)
+    res = requests.get(opts, timeout=60)
     assert res.status_code == 200
 
 
@@ -54,10 +54,10 @@ def test_uri(uri: str):
     res = None
     for _ in range(3):
         try:
-            res = httpx.get(f"{SERVICE}{uri}", timeout=120)
+            res = requests.get(f"{SERVICE}{uri}", timeout=120)
             if res.status_code != 503:
                 break
-        except httpx.ReadTimeout:
+        except requests.ReadTimeout:
             continue
         time.sleep(5)
     assert res is not None
