@@ -44,7 +44,7 @@ def get_uris():
             yield line.strip()
 
 
-@pytest.mark.parametrize("uri", get_uris())
+@pytest.mark.parametrize("uri", list(get_uris()))
 def test_uri(uri: str):
     """Test a URI."""
     # We can't test API server on localhost, so skip those
